@@ -60,7 +60,11 @@ const cartReducer = (state, action) => {
         }
     }
 
-
+    //cleaning the cart after order
+    if (action.type === 'CLEAR') {
+        return defaultCartState
+    
+}
     return defaultCartState
 }
 const CartProvider = (props) => {
@@ -77,6 +81,9 @@ const CartProvider = (props) => {
         dispatchCartAction({type: "REMOVE", id: id})
     }
 
+    const clearCartHandler = () => {
+        dispatchCartAction({type: 'CLEAR'})
+    }
 
     const cartContext = {
         // items: [], we use cartState to provider current or latest snapshot
@@ -85,6 +92,7 @@ const CartProvider = (props) => {
         totalAmount: cartState.totalAmount,
         addItem: addItemCartHandler,
         removeItem: removeItemCartHandler,
+        clearCart:clearCartHandler
     }
     //cartContext will be the value we are going to update or pass in the components
     return <CartContext.Provider value={cartContext}>
